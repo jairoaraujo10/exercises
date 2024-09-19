@@ -214,7 +214,7 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
                 "id": "integer",
                 "name": "string",
                 "email": "string"
-                // ... outros campos do usuário
+                "roles": ["string"]
             }
             // ... mais usuários
         ],
@@ -325,7 +325,14 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
 - **Body:**
     ```json
     {
-        "searchTerm": "string"
+        "searchTerm": "string",
+        "tags": [
+            {
+                "tag": {
+                    "value": "string"
+                }
+            }
+        ]
     }
     ```
 
