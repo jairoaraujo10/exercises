@@ -1,0 +1,98 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: jairo
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(320)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: roles
+                  type: varchar(516)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: jairo
+      changes:
+        - createTable:
+            tableName: exercises
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT AUTO_INCREMENT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_timestamp
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: JSON
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 3
+      author: jairo
+      changes:
+        - createTable:
+            tableName: exercise_tags
+            columns:
+              - column:
+                  name: exercise_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tag_value
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: exercise_tags
+            columnNames: exercise_id, tag_value
+            constraintName: pk_exercise_tags
+        - addForeignKeyConstraint:
+            baseTableName: exercise_tags
+            baseColumnNames: exercise_id
+            constraintName: fk_exercise_tags_exercises
+            referencedTableName: exercises
+            referencedColumnNames: id
