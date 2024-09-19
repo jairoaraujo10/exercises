@@ -1,6 +1,6 @@
-# Documentação da API de Autenticação, Gerenciamento de Usuários e Gerenciamento de Exercícios
+# Documentação da APIs
 
-Este documento fornece informações detalhadas sobre os endpoints da API de Autenticação, Gerenciamento de Usuários e Gerenciamento de Exercícios, incluindo suas funcionalidades, estruturas de solicitação e resposta, e possíveis códigos de status.
+Este documento fornece informações detalhadas sobre os endpoints da API de Autenticação, Gerenciamento de Usuários e Gerenciamento de Exercícios, incluindo suas funcionalidades, estruturas de requisição e resposta, e possíveis códigos de status.
 
 ## Índice
 1. [Visão Geral da API de Autenticação](#visão-geral-da-api-de-autenticação)
@@ -63,7 +63,7 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
         "token": "string"
     }
     ```
-- **400 Solicitação Inválida:**
+- **400 Requisição Inválida:**
     - **Body:**
     ```json
     {
@@ -96,7 +96,7 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
 **Respostas:**
 - **204 Sem Conteúdo**
 
-- **400 Solicitação Inválida:**
+- **400 Requisição Inválida:**
     - **Body:**
     ```json
     {
@@ -129,7 +129,7 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
     }
     ```
 
-- **400 Solicitação Inválida:**  
+- **400 Requisição Inválida:**  
 - **401 Não Autorizado**  
 - **404 Não Encontrado**  
 
@@ -168,7 +168,7 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
 
 **Respostas:**
 - **201 Criado**
-- **400 Solicitação Inválida**
+- **400 Requisição Inválida**
 - **401 Não Autorizado**
 
 #### 6. Excluir Usuário
@@ -221,7 +221,7 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
         "total": "integer"
     }
     ```
-- **400 Solicitação Inválida**
+- **400 Requisição Inválida**
 - **401 Não Autorizado**
 
 ### Endpoints de Gerenciamento de Exercícios
@@ -248,7 +248,7 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
 
 **Respostas:**
 - **201 Criado**
-- **400 Solicitação Inválida**
+- **400 Requisição Inválida**
 - **401 Não Autorizado**
 
 #### 9. Obter Exercício por ID
@@ -289,10 +289,20 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
 - **Headers:**
     - `Content-Type: application/json`
     - `Authorization: Bearer <token>`
+- **Body:**
+    ```json
+    {
+        "title": "string",
+        "description": "string",
+        "tags": [{"value": "string"}],
+        "possibleAnswers": ["string"],
+        "correctAnswerIndex": "integer"
+    }
+    ```
 
 **Respostas:**
 - **204 Sem Conteúdo**
-- **400 Solicitação Inválida**  
+- **400 Requisição Inválida**  
 - **401 Não Autorizado**  
 - **404 Não Encontrado**
 
@@ -359,15 +369,15 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
         "total": "integer"
     }
     ```
-- **400 Solicitação Inválida**
+- **400 Requisição Inválida**
 - **401 Não Autorizado**
 
 ## Respostas de Erro
 A API utiliza códigos de status HTTP padrão:
-- **400 Solicitação Inválida:** Parâmetros ausentes ou inválidos.
+- **400 Requisição Inválida:** Parâmetros ausentes ou inválidos.
 - **401 Não Autorizado:** Token inválido.
 - **404 Não Encontrado:** Recurso não encontrado.
-- **204 Sem Conteúdo:** Solicitação bem-sucedida, mas sem conteúdo para enviar na resposta.
+- **204 Sem Conteúdo:** requisição bem-sucedida, mas sem conteúdo para enviar na resposta.
 
 ## Autenticação
 Para acessar endpoints protegidos, inclua o seguinte header:
