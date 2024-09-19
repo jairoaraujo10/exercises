@@ -1,50 +1,50 @@
-# Authentication, User Management, and Exercise Management API Documentation
+# Documentação da API de Autenticação, Gerenciamento de Usuários e Gerenciamento de Exercícios
 
-This document provides comprehensive information about the Authentication, User Management, and Exercise Management API endpoints, including their functionalities, request and response structures, and possible status codes.
+Este documento fornece informações detalhadas sobre os endpoints da API de Autenticação, Gerenciamento de Usuários e Gerenciamento de Exercícios, incluindo suas funcionalidades, estruturas de solicitação e resposta, e possíveis códigos de status.
 
-## Table of Contents
-1. [Authentication API Overview](#authentication-api-overview)
-2. [User Management API Overview](#user-management-api-overview)
-3. [Exercise Management API Overview](#exercise-management-api-overview)
+## Índice
+1. [Visão Geral da API de Autenticação](#visão-geral-da-api-de-autenticação)
+2. [Visão Geral da API de Gerenciamento de Usuários](#visão-geral-da-api-de-gerenciamento-de-usuários)
+3. [Visão Geral da API de Gerenciamento de Exercícios](#visão-geral-da-api-de-gerenciamento-de-exercícios)
 4. [Endpoints](#endpoints)
-    - [Authentication Endpoints](#authentication-endpoints)
-        - [1. User Login](#1-user-login)
-        - [2. Request Password Reset](#2-request-password-reset)
-        - [3. Reset Password](#3-reset-password)
-    - [User Management Endpoints](#user-management-endpoints)
-        - [4. Get User by ID](#4-get-user-by-id)
-        - [5. Create User](#5-create-user)
-        - [6. Delete User](#6-delete-user)
-        - [7. Search Users](#7-search-users)
-    - [Exercise Management Endpoints](#exercise-management-endpoints)
-        - [8. Create Exercise](#8-create-exercise)
-        - [9. Get Exercise by ID](#9-get-exercise-by-id)
-        - [10. Update Exercise](#10-update-exercise)
-        - [11. Delete Exercise](#11-delete-exercise)
-        - [12. Search Exercises](#12-search-exercises)
-5. [Error Responses](#error-responses)
-6. [Authentication](#authentication)
-7. [Notes](#notes)
+    - [Endpoints de Autenticação](#endpoints-de-autenticação)
+        - [1. Login de Usuário](#1-login-de-usuário)
+        - [2. Solicitar Redefinição de Senha](#2-solicitar-redefinição-de-senha)
+        - [3. Redefinir Senha](#3-redefinir-senha)
+    - [Endpoints de Gerenciamento de Usuários](#endpoints-de-gerenciamento-de-usuários)
+        - [4. Obter Usuário por ID](#4-obter-usuário-por-id)
+        - [5. Criar Usuário](#5-criar-usuário)
+        - [6. Excluir Usuário](#6-excluir-usuário)
+        - [7. Buscar Usuários](#7-buscar-usuários)
+    - [Endpoints de Gerenciamento de Exercícios](#endpoints-de-gerenciamento-de-exercícios)
+        - [8. Criar Exercício](#8-criar-exercício)
+        - [9. Obter Exercício por ID](#9-obter-exercício-por-id)
+        - [10. Atualizar Exercício](#10-atualizar-exercício)
+        - [11. Excluir Exercício](#11-excluir-exercício)
+        - [12. Buscar Exercícios](#12-buscar-exercícios)
+5. [Respostas de Erro](#respostas-de-erro)
+6. [Autenticação](#autenticação)
+7. [Notas](#notas)
 
-## Authentication API Overview
-The Authentication API handles user authentication processes, including logging in, requesting password resets, and resetting passwords. It ensures secure access to protected resources by issuing and validating tokens.
+## Visão Geral da API de Autenticação
+A API de Autenticação lida com os processos de autenticação de usuários, incluindo login, solicitação de redefinição de senha e redefinição de senha. Ela garante acesso seguro a recursos protegidos emitindo e validando tokens.
 
-## User Management API Overview
-The User Management API allows for managing user data within the system. It provides functionalities to retrieve user information, create new users, delete existing users, and search for users based on specific criteria.
+## Visão Geral da API de Gerenciamento de Usuários
+A API de Gerenciamento de Usuários permite gerenciar dados de usuários dentro do sistema. Fornece funcionalidades para recuperar informações de usuários, criar novos usuários, excluir usuários existentes e buscar usuários com base em critérios específicos.
 
-## Exercise Management API Overview
-The Exercise Management API facilitates the creation, retrieval, updating, deletion, and searching of exercises within the system. It enables authorized users to manage exercise content efficiently, ensuring that exercises are organized, accessible, and up-to-date.
+## Visão Geral da API de Gerenciamento de Exercícios
+A API de Gerenciamento de Exercícios facilita a criação, recuperação, atualização, exclusão e busca de exercícios no sistema. Permite que usuários autorizados gerenciem o conteúdo de exercícios de maneira eficiente, garantindo que os exercícios estejam organizados, acessíveis e atualizados.
 
 ## Endpoints
 
-### Authentication Endpoints
+### Endpoints de Autenticação
 
-#### 1. User Login
-**Endpoint:** `/auth/login`
-**Method:** `POST`
-**Description:** Authenticates a user using their email and password. Upon successful authentication, returns a token for authorized access.
+#### 1. Login de Usuário
+**Endpoint:** `/auth/login`  
+**Método:** `POST`  
+**Descrição:** Autentica um usuário utilizando seu email e senha. Após a autenticação bem-sucedida, retorna um token para acesso autorizado.
 
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Content-Type: application/json`
 - **Body:**
@@ -55,7 +55,7 @@ The Exercise Management API facilitates the creation, retrieval, updating, delet
     }
     ```
 
-**Responses:**
+**Respostas:**
 - **200 OK:**
     - **Body:**
     ```json
@@ -63,27 +63,27 @@ The Exercise Management API facilitates the creation, retrieval, updating, delet
         "token": "string"
     }
     ```
-- **400 Bad Request:**
+- **400 Solicitação Inválida:**
     - **Body:**
     ```json
     {
         "message": "string"
     }
     ```
-- **401 Unauthorized:**
+- **401 Não Autorizado:**
     - **Body:**
     ```json
     {
-        "message": "Invalid credentials"
+        "message": "Credenciais inválidas"
     }
     ```
 
-#### 2. Request Password Reset
-**Endpoint:** `/auth/reset-password/request`
-**Method:** `POST`
-**Description:** Initiates a password reset process for the user by sending a reset link or code to the provided email.
+#### 2. Solicitar Redefinição de Senha
+**Endpoint:** `/auth/reset-password/request`  
+**Método:** `POST`  
+**Descrição:** Inicia o processo de redefinição de senha enviando um link ou código de redefinição para o email fornecido.
 
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Content-Type: application/json`
 - **Body:**
@@ -93,23 +93,23 @@ The Exercise Management API facilitates the creation, retrieval, updating, delet
     }
     ```
 
-**Responses:**
-- **204 No Content**
+**Respostas:**
+- **204 Sem Conteúdo**
 
-- **400 Bad Request:**
+- **400 Solicitação Inválida:**
     - **Body:**
     ```json
     {
-        "message": "Missing email"
+        "message": "Email ausente"
     }
     ```
 
-#### 3. Reset Password
-**Endpoint:** `/auth/reset-password`
-**Method:** `POST`
-**Description:** Resets the user's password using a valid token.
+#### 3. Redefinir Senha
+**Endpoint:** `/auth/reset-password`  
+**Método:** `POST`  
+**Descrição:** Redefine a senha do usuário utilizando um token válido.
 
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Content-Type: application/json`
     - `Authorization: Bearer <token>`
@@ -120,41 +120,41 @@ The Exercise Management API facilitates the creation, retrieval, updating, delet
     }
     ```
 
-**Responses:**
+**Respostas:**
 - **200 OK:**
     - **Body:**
     ```json
     {
-        "message": "Password reset successfully"
+        "message": "Senha redefinida com sucesso"
     }
     ```
 
-- **400 Bad Request:**
-- **401 Unauthorized**
-- **404 Not Found**
+- **400 Solicitação Inválida:**  
+- **401 Não Autorizado**  
+- **404 Não Encontrado**  
 
-### User Management Endpoints
+### Endpoints de Gerenciamento de Usuários
 
-#### 4. Get User by ID
-**Endpoint:** `/user/{id}`
-**Method:** `GET`
-**Description:** Retrieves a user by their ID.
+#### 4. Obter Usuário por ID
+**Endpoint:** `/user/{id}`  
+**Método:** `GET`  
+**Descrição:** Recupera um usuário pelo seu ID.
 
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Authorization: Bearer <token>`
 
-**Responses:**
-- **200 OK:** Returns the user details.
-- **401 Unauthorized**
-- **404 Not Found**
+**Respostas:**
+- **200 OK:** Retorna os detalhes do usuário.
+- **401 Não Autorizado**  
+- **404 Não Encontrado**  
 
-#### 5. Create User
-**Endpoint:** `/user`
-**Method:** `POST`
-**Description:** Creates a new user.
+#### 5. Criar Usuário
+**Endpoint:** `/user`  
+**Método:** `POST`  
+**Descrição:** Cria um novo usuário.
 
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Content-Type: application/json`
     - `Authorization: Bearer <token>`
@@ -166,46 +166,46 @@ The Exercise Management API facilitates the creation, retrieval, updating, delet
     }
     ```
 
-**Responses:**
-- **201 Created**
-- **400 Bad Request**
-- **401 Unauthorized**
+**Respostas:**
+- **201 Criado**
+- **400 Solicitação Inválida**
+- **401 Não Autorizado**
 
-#### 6. Delete User
-**Endpoint:** `/user/{id}`
-**Method:** `DELETE`
-**Description:** Deletes a user by ID.
+#### 6. Excluir Usuário
+**Endpoint:** `/user/{id}`  
+**Método:** `DELETE`  
+**Descrição:** Exclui um usuário pelo ID.
 
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Authorization: Bearer <token>`
 
-**Responses:**
-- **204 No Content**
-- **401 Unauthorized**
-- **404 Not Found**
+**Respostas:**
+- **204 Sem Conteúdo**
+- **401 Não Autorizado**  
+- **404 Não Encontrado**
 
-#### 7. Search Users
-**Endpoint:** `/user/search`
-**Method:** `POST`
-**Description:** Searches users based on provided criteria.
+#### 7. Buscar Usuários
+**Endpoint:** `/user/search`  
+**Método:** `POST`  
+**Descrição:** Busca usuários com base em critérios fornecidos.
 
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Content-Type: application/json`
     - `Authorization: Bearer <token>`
 
-**Responses:**
+**Respostas:**
 - **200 OK**
 
-### Exercise Management Endpoints
+### Endpoints de Gerenciamento de Exercícios
 
-#### 8. Create Exercise
-**Endpoint:** `/exercise`
-**Method:** `POST`
-**Description:** Creates a new exercise.
+#### 8. Criar Exercício
+**Endpoint:** `/exercise`  
+**Método:** `POST`  
+**Descrição:** Cria um novo exercício.
 
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Content-Type: application/json`
     - `Authorization: Bearer <token>`
@@ -220,78 +220,77 @@ The Exercise Management API facilitates the creation, retrieval, updating, delet
     }
     ```
 
-**Responses:**
-- **201 Created**
-- **400 Bad Request**
-- **401 Unauthorized**
+**Respostas:**
+- **201 Criado**
+- **400 Solicitação Inválida**
+- **401 Não Autorizado**
 
-#### 9. Get Exercise by ID
-**Endpoint:** `/exercise/{id}`
-**Method:** `GET`
-**Description:** Retrieves an exercise by its ID.
+#### 9. Obter Exercício por ID
+**Endpoint:** `/exercise/{id}`  
+**Método:** `GET`  
+**Descrição:** Recupera um exercício pelo ID.
 
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Authorization: Bearer <token>`
 
-**Responses:**
-- **200 OK**
-- **401 Unauthorized**
-- **404 Not Found**
+**Respostas:**
+- **200 OK**  
+- **401 Não Autorizado**  
+- **404 Não Encontrado**
 
-#### 10. Update Exercise
-**Endpoint:** `/exercise/{id}`
-**Method:** `PUT`
-**Description:** Updates an exercise by its ID.
+#### 10. Atualizar Exercício
+**Endpoint:** `/exercise/{id}`  
+**Método:** `PUT`  
+**Descrição:** Atualiza um exercício pelo ID.
 
-**Request:**
-- **Headers:**
-    - `Content-Type: application/json`
-    - `Authorization: Bearer <token>`
-
-**Responses:**
-- **204 No Content**
-- **400 Bad Request**
-- **401 Unauthorized**
-- **404 Not Found**
-
-#### 11. Delete Exercise
-**Endpoint:** `/exercise/{id}`
-**Method:** `DELETE`
-**Description:** Deletes an exercise by ID.
-
-**Request:**
-- **Headers:**
-    - `Authorization: Bearer <token>`
-
-**Responses:**
-- **204 No Content**
-- **401 Unauthorized**
-- **404 Not Found**
-
-#### 12. Search Exercises
-**Endpoint:** `/exercise/search`
-**Method:** `POST`
-**Description:** Searches exercises based on provided criteria.
-
-**Request:**
+**Requisição:**
 - **Headers:**
     - `Content-Type: application/json`
     - `Authorization: Bearer <token>`
 
-**Responses:**
+**Respostas:**
+- **204 Sem Conteúdo**
+- **400 Solicitação Inválida**  
+- **401 Não Autorizado**  
+- **404 Não Encontrado**
+
+#### 11. Excluir Exercício
+**Endpoint:** `/exercise/{id}`  
+**Método:** `DELETE`  
+**Descrição:** Exclui um exercício pelo ID.
+
+**Requisição:**
+- **Headers:**
+    - `Authorization: Bearer <token>`
+
+**Respostas:**
+- **204 Sem Conteúdo**
+- **401 Não Autorizado**  
+- **404 Não Encontrado**
+
+#### 12. Buscar Exercícios
+**Endpoint:** `/exercise/search`  
+**Método:** `POST`  
+**Descrição:** Busca exercícios com base em critérios fornecidos.
+
+**Requisição:**
+- **Headers:**
+    - `Content-Type: application/json`
+    - `Authorization: Bearer <token>`
+
+**Respostas:**
 - **200 OK**
 
-## Error Responses
-The API uses standard HTTP status codes:
-- **400 Bad Request**: Missing or invalid parameters.
-- **401 Unauthorized**: Invalid token.
-- **404 Not Found**: Resource not found.
-- **204 No Content**: Successful request but no content.
+## Respostas de Erro
+A API utiliza códigos de status HTTP padrão:
+- **400 Solicitação Inválida:** Parâmetros ausentes ou inválidos.
+- **401 Não Autorizado:** Token inválido.
+- **404 Não Encontrado:** Recurso não encontrado.
+- **204 Sem Conteúdo:** Solicitação bem-sucedida, mas sem conteúdo para enviar na resposta.
 
-## Authentication
-To access protected endpoints, include the following header:
+## Autenticação
+Para acessar endpoints protegidos, inclua o seguinte header:
 
 ```makefile
 Authorization: Bearer <token>
-
