@@ -188,15 +188,41 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
 #### 7. Buscar Usuários
 **Endpoint:** `/user/search`  
 **Método:** `POST`  
-**Descrição:** Busca usuários com base em critérios fornecidos.
+**Descrição:** Busca usuários com base em critérios fornecidos. Suporta paginação via parâmetros de query.
 
 **Requisição:**
 - **Headers:**
     - `Content-Type: application/json`
     - `Authorization: Bearer <token>`
+- **Query Parameters:**
+    - `limit` (inteiro, opcional): O número máximo de usuários a serem retornados.
+    - `offset` (inteiro, opcional): O número de usuários a serem ignorados antes de coletar o conjunto de resultados.
+- **Body:**
+    ```json
+    {
+        "searchTerm": "string"
+    }
+    ```
 
 **Respostas:**
-- **200 OK**
+- **200 OK:**
+    - **Body:**
+    ```json
+    {
+        "users": [
+            {
+                "id": "integer",
+                "name": "string",
+                "email": "string"
+                // ... outros campos do usuário
+            }
+            // ... mais usuários
+        ],
+        "total": "integer"
+    }
+    ```
+- **400 Solicitação Inválida**
+- **401 Não Autorizado**
 
 ### Endpoints de Gerenciamento de Exercícios
 
@@ -235,7 +261,22 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
     - `Authorization: Bearer <token>`
 
 **Respostas:**
-- **200 OK**  
+- **200 OK:** Retorna os detalhes do exercício.
+    - **Body:**
+    ```json
+    {
+        "id": "string",
+        "title": "string",
+        "description": "string",
+        "tags": [
+            {
+                "value": "string"
+            }
+        ],
+        "possibleAnswers": ["string"],
+        "correctAnswerIndex": "integer"
+    }
+    ```
 - **401 Não Autorizado**  
 - **404 Não Encontrado**
 
@@ -272,15 +313,47 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
 #### 12. Buscar Exercícios
 **Endpoint:** `/exercise/search`  
 **Método:** `POST`  
-**Descrição:** Busca exercícios com base em critérios fornecidos.
+**Descrição:** Busca exercícios com base em critérios fornecidos. Suporta paginação via parâmetros de query.
 
 **Requisição:**
 - **Headers:**
     - `Content-Type: application/json`
     - `Authorization: Bearer <token>`
+- **Query Parameters:**
+    - `limit` (inteiro, opcional): O número máximo de exercícios a serem retornados.
+    - `offset` (inteiro, opcional): O número de exercícios a serem ignorados antes de coletar o conjunto de resultados.
+- **Body:**
+    ```json
+    {
+        "searchTerm": "string"
+    }
+    ```
 
 **Respostas:**
-- **200 OK**
+- **200 OK:**
+    - **Body:**
+    ```json
+    {
+        "exercises": [
+            {
+                "id": "string",
+                "title": "string",
+                "description": "string",
+                "tags": [
+                    {
+                        "value": "string"
+                    }
+                ],
+                "possibleAnswers": ["string"],
+                "correctAnswerIndex": "integer"
+            }
+            // ... mais exercícios
+        ],
+        "total": "integer"
+    }
+    ```
+- **400 Solicitação Inválida**
+- **401 Não Autorizado**
 
 ## Respostas de Erro
 A API utiliza códigos de status HTTP padrão:
