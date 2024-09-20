@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.DuplicateKeyException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -182,6 +183,24 @@ class JdbcExerciseRepositoryTest {
     }
 
     private fun insertExerciseIntoDatabase(exercise: Exercise) {
+        insertAuthor(exercise)
+        insertExercise(exercise)
+        insertExerciseTags(exercise)
+    }
+
+    private fun insertAuthor(exercise: Exercise) {
+        try {
+            jdbcTemplate.update(
+                "INSERT INTO users (id, name, email, password, roles) VALUES (?, ?, ?, ?, ?)",
+                exercise.metadata.authorId.value, "test user",
+                exercise.metadata.authorId.value.toString() + "test@mail.com", "psw", "[]"
+            )
+        } catch (e: DuplicateKeyException) {
+//            do nothing
+        }
+    }
+
+    private fun insertExercise(exercise: Exercise) {
         jdbcTemplate.update(
             "INSERT INTO exercises (id, title, author_id, creation_timestamp, content) VALUES (?, ?, ?, ?, ?)",
             exercise.id.value?.toLong(),
@@ -190,6 +209,9 @@ class JdbcExerciseRepositoryTest {
             exercise.metadata.creationTimestamp,
             Gson().toJson(exercise.content)
         )
+    }
+
+    private fun insertExerciseTags(exercise: Exercise) {
         val sql = "INSERT INTO exercise_tags (exercise_id, tag_value) VALUES (?, ?)"
         exercise.metadata.tags.forEach { tag ->
             jdbcTemplate.update(sql, exercise.id.value?.toLong(), tag.value)
