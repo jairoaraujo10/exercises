@@ -102,3 +102,100 @@ databaseChangeLog:
             constraintName: fk_exercise_tags_exercises
             referencedTableName: exercises
             referencedColumnNames: id
+
+  - changeSet:
+      id: 4
+      author: jairo
+      changes:
+        - createTable:
+            tableName: exercise_lists
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT AUTO_INCREMENT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_timestamp
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: exercise_lists
+            baseColumnNames: author_id
+            constraintName: fk_exercise_lists_users
+            referencedTableName: users
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 5
+      author: jairo
+      changes:
+        - createTable:
+            tableName: exercise_list_exercises
+            columns:
+              - column:
+                  name: exercise_list_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exercise_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: exercise_list_exercises
+            columnNames: exercise_list_id, exercise_id
+            constraintName: pk_exercise_list_exercises
+        - addForeignKeyConstraint:
+            baseTableName: exercise_list_exercises
+            baseColumnNames: exercise_list_id
+            constraintName: fk_exercise_list_exercises_lists
+            referencedTableName: exercise_lists
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: exercise_list_exercises
+            baseColumnNames: exercise_id
+            constraintName: fk_exercise_list_exercises_exercises
+            referencedTableName: exercises
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 6
+      author: jairo
+      changes:
+        - createTable:
+            tableName: exercise_list_tags
+            columns:
+              - column:
+                  name: exercise_list_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tag_value
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: exercise_list_tags
+            columnNames: exercise_list_id, tag_value
+            constraintName: pk_exercise_list_tags
+        - addForeignKeyConstraint:
+            baseTableName: exercise_list_tags
+            baseColumnNames: exercise_list_id
+            constraintName: fk_exercise_list_tags_lists
+            referencedTableName: exercise_lists
+            referencedColumnNames: id
