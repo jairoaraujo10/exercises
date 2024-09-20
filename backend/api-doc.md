@@ -1,4 +1,4 @@
-# Documentação da APIs
+# Documentação das APIs
 
 Este documento fornece informações detalhadas sobre os endpoints da API de Autenticação, Gerenciamento de Usuários e Gerenciamento de Exercícios, incluindo suas funcionalidades, estruturas de requisição e resposta, e possíveis códigos de status.
 
@@ -81,7 +81,7 @@ A API de Gerenciamento de Exercícios facilita a criação, recuperação, atual
 #### 2. Solicitar Redefinição de Senha
 **Endpoint:** `/auth/reset-password/request`  
 **Método:** `POST`  
-**Descrição:** Inicia o processo de redefinição de senha enviando um link ou código de redefinição para o email fornecido.
+**Descrição:** Inicia o processo de redefinição de senha enviando um link de redefinição para o email fornecido.
 
 **Requisição:**
 - **Headers:**
