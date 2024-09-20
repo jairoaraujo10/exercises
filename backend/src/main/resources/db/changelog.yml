@@ -68,6 +68,12 @@ databaseChangeLog:
                   type: JSON
                   constraints:
                     nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: exercises
+            baseColumnNames: author_id
+            constraintName: fk_exercises_users
+            referencedTableName: users
+            referencedColumnNames: id
 
   - changeSet:
       id: 3

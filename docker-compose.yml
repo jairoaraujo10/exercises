@@ -11,15 +11,15 @@ services:
     networks:
       - application-network
 
-  application:
+  backend:
     build: ./backend
-    container_name: application
+    container_name: backend
     depends_on:
       - mysql
     environment:
       - MYSQL_URL=jdbc:mysql://mysql:3306/exercises?allowPublicKeyRetrieval=true&useSSL=false
-      - MYSQL_USERNAME=user
-      - MYSQL_PASSWORD=password
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=root
       - JWT_SECRET=fake-secret-key
       - SMTP_HOST=fake-smtp-server.com
       - SMTP_PORT=587
