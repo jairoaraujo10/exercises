@@ -26,6 +26,7 @@ services:
       - SMTP_USERNAME=fake_smtp_user
       - SMTP_PASSWORD=fake_smtp_password
       - SMTP_FROM_EMAIL=fake_email@example.com
+      - RESET_PASSWORD_BASE_ENDPOINT=http://localhost:5173/password-reset
       - ADMIN_USERNAME=fake_admin
       - ADMIN_EMAIL=fake_admin@mail.com
       - ADMIN_PASSWORD=fake_admin_password

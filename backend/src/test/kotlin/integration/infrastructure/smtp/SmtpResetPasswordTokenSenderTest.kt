@@ -29,7 +29,8 @@ class SmtpResetPasswordTokenSenderTest {
         val session = Session.getInstance(props)
         sender = SmtpResetPasswordTokenSender(
             session = session,
-            fromEmail = "noreply@example.com"
+            fromEmail = "noreply@example.com",
+            baseEndpoint = "http://localhost:8080/password-reset",
         )
     }
 
@@ -59,7 +60,7 @@ class SmtpResetPasswordTokenSenderTest {
         )
         val content = message.content as String
         assertEquals(
-            "Please use the following token to reset your password: 123456",
+            "Reset password url: http://localhost:8080/password-reset?token=123456",
             content.trim()
         )
     }

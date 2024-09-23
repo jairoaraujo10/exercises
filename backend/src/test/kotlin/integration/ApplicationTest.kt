@@ -25,5 +25,6 @@ class ApplicationTest {
         System.setProperty("SMTP_FROM_EMAIL", "noreply@example.com")
         System.setProperty("SMTP_USERNAME", "testUser")
         System.setProperty("SMTP_PASSWORD", "testPass")
+        System.setProperty("RESET_PASSWORD_BASE_ENDPOINT", "http://localhost:8080/password-reset")
     }
 }

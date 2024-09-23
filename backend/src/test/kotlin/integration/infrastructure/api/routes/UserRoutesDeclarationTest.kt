@@ -74,7 +74,9 @@ class UserRoutesDeclarationTest {
 
     @Test
     fun `get user request with non existing user id`() {
-        every { userController.getUser(UserId(1L), requester) } throws NoSuchElementException("User not found")
+        every {
+            userController.getUser(UserId(1L), requester)
+        } throws NoSuchElementException("User not found")
 
         given()
             .header("Authorization", "Bearer valid-token")
@@ -98,7 +100,9 @@ class UserRoutesDeclarationTest {
     @Test
     fun `creates a new user successfully`() {
         val requestBody = """{"name": "Test", "email": "test@mail.com"}"""
-        every { userController.createUser("Test", Email("test@mail.com"), requester) } just Runs
+        every {
+            userController.createUser("Test", Email("test@mail.com"), requester)
+        } just Runs
 
         given().contentType(ContentType.JSON)
             .header("Authorization", "Bearer valid-token")
@@ -162,7 +166,9 @@ class UserRoutesDeclarationTest {
 
     @Test
     fun `delete user request with non-existing user id`() {
-        every { userController.delete(UserId(1L), requester) } throws NoSuchElementException("User not found")
+        every {
+            userController.delete(UserId(1L), requester)
+        } throws NoSuchElementException("User not found")
 
         given()
             .header("Authorization", "Bearer valid-token")

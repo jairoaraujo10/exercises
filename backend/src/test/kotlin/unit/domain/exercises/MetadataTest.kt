@@ -16,7 +16,7 @@ class MetadataTest {
         val authorId = UserId(123L)
         val creationTimestamp = System.currentTimeMillis()
 
-        val metadata = domain.exercises.Metadata(title, tags, authorId, creationTimestamp)
+        val metadata = Metadata(title, tags, authorId, creationTimestamp)
 
         assertEquals(title, metadata.title)
         assertEquals(tags, metadata.tags)

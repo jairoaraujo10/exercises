@@ -103,7 +103,9 @@ class ExerciseRoutesDeclarationTest {
 
     @Test
     fun `get exercise request with non existing exercise id`() {
-        every { exerciseController.get(ExerciseId("1"), requester) } throws NoSuchElementException("Exercise not found")
+        every {
+            exerciseController.get(ExerciseId("1"), requester)
+        } throws NoSuchElementException("Exercise not found")
 
         given()
             .header("Authorization", "Bearer valid-token")
@@ -164,7 +166,9 @@ class ExerciseRoutesDeclarationTest {
 
     @Test
     fun `delete exercise request with non-existing exercise id`() {
-        every { exerciseController.delete(ExerciseId("1"), requester) } throws NoSuchElementException("Exercise not found")
+        every {
+            exerciseController.delete(ExerciseId("1"), requester)
+        } throws NoSuchElementException("Exercise not found")
 
         given()
             .header("Authorization", "Bearer valid-token")

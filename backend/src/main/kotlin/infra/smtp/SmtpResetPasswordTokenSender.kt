@@ -13,7 +13,8 @@ import javax.mail.internet.MimeMessage
 
 class SmtpResetPasswordTokenSender(
     private val session: Session,
-    private val fromEmail: String
+    private val fromEmail: String,
+    private val baseEndpoint: String
 ) : ResetPasswordTokenSender {
     private var logger: Logger = LogManager.getLogger(SmtpResetPasswordTokenSender::class.java)
 
@@ -26,7 +27,7 @@ class SmtpResetPasswordTokenSender(
                     InternetAddress.parse(email.address)
                 )
                 subject = "Password Reset"
-                setText("Please use the following token to reset your password: ${token.value}")
+                setText("Reset password url: ${baseEndpoint}?token=${token.value}")
             }
             Transport.send(message)
             logger.info("Reset password email sent successfully to {}", email.address)

@@ -2,6 +2,7 @@ package infra.contexts
 
 import application.auth.AuthController
 import application.auth.ResetPasswordTokenSender
+import configuration.PasswordResetConfig
 import configuration.SecurityConfig
 import configuration.SmtpConfig
 import domain.users.UserRepository
@@ -32,10 +33,12 @@ open class AuthContext {
 
     private fun resetPasswordTokenSender(): ResetPasswordTokenSender {
         val props = System.getProperties().apply {
+            put("mail.smtp.starttls.enable","true")
+            put("mail.smtp.ssl.enable", "true");
+            put("mail.smtp.auth", "true")
             put("mail.smtp.host", SmtpConfig.host())
             put("mail.smtp.socketFactory.port", SmtpConfig.port().toString());
             put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory")
-            put("mail.smtp.auth", "true")
             put("mail.smtp.port", SmtpConfig.port().toString())
         }
         val session = Session.getInstance(props, object : Authenticator() {
@@ -43,7 +46,8 @@ open class AuthContext {
                 return PasswordAuthentication(SmtpConfig.username(), SmtpConfig.password())
             }
         })
-        return SmtpResetPasswordTokenSender(session, SmtpConfig.fromEmail())
+        return SmtpResetPasswordTokenSender(session, SmtpConfig.fromEmail(),
+            PasswordResetConfig.resetPasswordBaseEndpoint())
     }
 
     @Bean

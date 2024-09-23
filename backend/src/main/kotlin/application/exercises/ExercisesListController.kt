@@ -21,6 +21,12 @@ class ExercisesListController(
         return repository.add(exercisesList)
     }
 
+    fun get(id: ExercisesListId, requester: Requester): ExercisesList {
+        val exercisesList = repository.get(id)
+        permissionValidator.validatePermissionToView(requester, exercisesList.accessPolicy)
+        return exercisesList
+    }
+
     fun update(id: ExercisesListId, request: UpdateExercisesListRequest, requester: Requester) {
         val exercisesList = repository.get(id)
         permissionValidator.validatePermissionToUpdate(requester, exercisesList.accessPolicy)

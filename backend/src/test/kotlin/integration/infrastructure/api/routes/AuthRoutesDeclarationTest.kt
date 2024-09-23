@@ -63,6 +63,7 @@ class AuthRoutesDeclarationTest {
 
     @Test
     fun `successful login when valid credentials`() {
+        Thread.sleep(1)
         given().contentType(ContentType.JSON)
             .body("""{"email": "test@mail.com", "password": "test-password"}""".trimIndent())
         .`when`().post("/auth/login")
