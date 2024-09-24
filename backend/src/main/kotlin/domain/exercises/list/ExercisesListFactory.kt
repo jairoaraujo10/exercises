@@ -4,6 +4,7 @@ import domain.exercises.Metadata
 import domain.exercises.list.request.CreateExercisesListRequest
 import domain.users.UserId
 import domain.utils.TimeProvider
+import java.util.ArrayList
 
 class ExercisesListFactory(
     private val timeProvider: TimeProvider
@@ -17,7 +18,7 @@ class ExercisesListFactory(
                 authorId,
                 timeProvider.currentTimeMillis()
             ),
-            emptyList()
+            ArrayList()
         )
     }
 }

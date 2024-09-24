@@ -64,7 +64,7 @@ class ExerciseControllerTest {
         verifyOrder {
             repository.get(exerciseId)
             permissionValidator.validatePermissionToUpdate(requester, toUpdate.accessPolicy)
-            toUpdate.apply(request)
+            toUpdate.update(request)
             repository.update(toUpdate)
         }
     }

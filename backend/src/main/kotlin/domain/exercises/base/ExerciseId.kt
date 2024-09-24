@@ -7,10 +7,6 @@ data class ExerciseId(val value: String?) {
         }
     }
 
-    fun initialized(): Boolean {
-        return !value.isNullOrBlank()
-    }
-
     override fun toString(): String {
         return value.orEmpty()
     }

@@ -7,12 +7,23 @@ import domain.security.AccessPolicy
 
 data class ExercisesList(
     val id: ExercisesListId,
-    val metadata: Metadata,
-    val exercises: List<ExerciseId>
+    var metadata: Metadata,
+    val exercises: ArrayList<ExerciseId>
 ) {
-    fun apply(updateRequest: UpdateExercisesListRequest) {
-        TODO("Not yet implemented")
+    val accessPolicy: AccessPolicy = AccessPolicy(metadata.authorId)
+
+    fun addExercise(exerciseId: ExerciseId){
+        exercises.add(exerciseId)
     }
 
-    val accessPolicy: AccessPolicy = AccessPolicy(metadata.authorId)
+    fun removeExercise(exerciseId: ExerciseId){
+        exercises.remove(exerciseId)
+    }
+
+    fun update(updateRequest: UpdateExercisesListRequest) {
+        metadata = metadata.copy(
+            title = updateRequest.title ?: metadata.title,
+            tags = updateRequest.tags ?: metadata.tags
+        )
+    }
 }

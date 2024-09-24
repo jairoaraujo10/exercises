@@ -11,7 +11,7 @@ data class Exercise(
 ) {
     val accessPolicy: AccessPolicy = AccessPolicy(metadata.authorId)
 
-    fun apply(updateRequest: UpdateExerciseRequest) {
+    fun update(updateRequest: UpdateExerciseRequest) {
         metadata = metadata.copy(
             title = updateRequest.title ?: metadata.title,
             tags = updateRequest.tags ?: metadata.tags

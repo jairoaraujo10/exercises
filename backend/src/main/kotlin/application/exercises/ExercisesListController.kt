@@ -30,7 +30,7 @@ class ExercisesListController(
     fun update(id: ExercisesListId, request: UpdateExercisesListRequest, requester: Requester) {
         val exercisesList = repository.get(id)
         permissionValidator.validatePermissionToUpdate(requester, exercisesList.accessPolicy)
-        exercisesList.apply(request)
+        exercisesList.update(request)
         repository.update(exercisesList)
     }
 

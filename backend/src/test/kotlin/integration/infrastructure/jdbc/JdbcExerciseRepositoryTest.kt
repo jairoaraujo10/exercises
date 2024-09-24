@@ -36,12 +36,14 @@ class JdbcExerciseRepositoryTest {
     fun setup() {
         jdbcTemplate.execute("DELETE FROM exercise_tags")
         jdbcTemplate.execute("DELETE FROM exercises")
+        jdbcTemplate.execute("DELETE FROM users")
         repository = JdbcExerciseRepository(jdbcTemplate, Gson())
     }
 
     @Test
     fun `add inserts exercise when it does not exist`() {
         val exercise = ExerciseFixture.anyExercise().copy(id = ExerciseId(null))
+        insertAuthor(exercise)
 
         val result = repository.add(exercise)
 

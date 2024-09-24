@@ -34,7 +34,7 @@ class ExerciseController(
     fun update(id: ExerciseId, request: UpdateExerciseRequest, requester: Requester) {
         val exercise = repository.get(id)
         permissionValidator.validatePermissionToUpdate(requester, exercise.accessPolicy)
-        exercise.apply(request)
+        exercise.update(request)
         repository.update(exercise)
     }
 
