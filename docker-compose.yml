@@ -26,12 +26,21 @@ services:
       - SMTP_USERNAME=fake_smtp_user
       - SMTP_PASSWORD=fake_smtp_password
       - SMTP_FROM_EMAIL=fake_email@example.com
-      - RESET_PASSWORD_BASE_ENDPOINT=http://localhost:5173/password-reset
+      - RESET_PASSWORD_BASE_ENDPOINT=http://localhost:80/password-reset
       - ADMIN_USERNAME=fake_admin
       - ADMIN_EMAIL=fake_admin@mail.com
       - ADMIN_PASSWORD=fake_admin_password
     ports:
       - "8080:8080"
+    networks:
+      - application-network
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
     networks:
       - application-network
 
