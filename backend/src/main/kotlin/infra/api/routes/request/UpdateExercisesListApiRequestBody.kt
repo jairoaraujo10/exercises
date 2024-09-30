@@ -4,7 +4,7 @@ import domain.exercises.Tag
 import domain.exercises.list.request.UpdateExercisesListRequest
 import infra.api.routes.response.TagView
 
-class UpdateExercisesListApiRequestBody(
+data class UpdateExercisesListApiRequestBody(
     val title: String?,
     val tags: Set<TagView>?
 ) {

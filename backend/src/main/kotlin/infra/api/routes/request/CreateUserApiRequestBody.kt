@@ -2,7 +2,7 @@ package infra.api.routes.request
 
 import domain.users.Email
 
-class CreateUserApiRequestBody(
+data class CreateUserApiRequestBody(
     val name: String?,
     val email: String?
 ) {

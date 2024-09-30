@@ -5,11 +5,13 @@ import com.google.gson.Gson
 import domain.exercises.list.ExercisesListId
 import domain.users.auth.Token
 import domain.users.auth.TokenService
+import domain.utils.PaginatedList
 import infra.api.AuthFilter
 import infra.api.Gateway
 import infra.api.routes.ErrorsRoutesDeclaration
 import infra.api.routes.ExercisesListRoutesDeclaration
 import infra.api.routes.response.ExercisesListView
+import infra.api.routes.response.SearchExercisesListResponseView
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -153,8 +155,8 @@ class ExercisesListRoutesDeclarationTest {
 
         given()
             .header("Authorization", "Bearer valid-token")
-            .`when`().delete("/exercises-list/1")
-            .then().assertThat()
+        .`when`().delete("/exercises-list/1")
+        .then().assertThat()
             .statusCode(204)
     }
 
@@ -166,8 +168,8 @@ class ExercisesListRoutesDeclarationTest {
 
         given()
             .header("Authorization", "Bearer valid-token")
-            .`when`().delete("/exercises-list/1")
-            .then().assertThat()
+        .`when`().delete("/exercises-list/1")
+        .then().assertThat()
             .statusCode(404)
             .contentType(ContentType.JSON)
             .body("message", equalTo("Exercises list not found"))
@@ -176,8 +178,53 @@ class ExercisesListRoutesDeclarationTest {
     @Test
     fun `delete exercises list request with missing authorization token`() {
         given()
-            .`when`().delete("/exercises-list/1")
-            .then().assertThat()
+        .`when`().delete("/exercises-list/1")
+        .then().assertThat()
+            .statusCode(401)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Unauthorized"))
+    }
+
+    @Test
+    fun `searches for exercises lists successfully`() {
+        val searchRequest = """{"searchTerm": "list"}"""
+        val expectedExercisesLists = PaginatedList(listOf(ExercisesListFixture.anyExercisesList()), 1)
+        val expectedResponse = SearchExercisesListResponseView.from(expectedExercisesLists)
+
+        every { exercisesListController.searchExercisesList(any(), any(), requester) } returns expectedExercisesLists
+
+        given().contentType(ContentType.JSON)
+            .header("Authorization", "Bearer valid-token")
+            .body(searchRequest)
+        .`when`().post("/exercises-list/search")
+        .then().assertThat()
+            .statusCode(200)
+            .contentType(ContentType.JSON)
+            .body(equalTo(gson.toJson(expectedResponse)))
+    }
+
+    @Test
+    fun `searches for exercises lists with invalid pagination params`() {
+        val searchRequest = """{"searchTerm": "list"}"""
+
+        given().contentType(ContentType.JSON)
+            .body(searchRequest)
+            .header("Authorization", "Bearer valid-token")
+        .`when`().post("/exercises-list/search?limit=1&offset=a")
+        .then().assertThat()
+            .statusCode(400)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Invalid query param 'offset'"))
+    }
+
+    @Test
+    fun `search exercises list request with missing authorization token`() {
+        val searchRequest = """{"searchTerm": "list"}"""
+
+        given().contentType(ContentType.JSON)
+            .body(searchRequest)
+        .`when`().post("/exercises-list/search")
+        .then().assertThat()
             .statusCode(401)
             .contentType(ContentType.JSON)
             .body("message", equalTo("Unauthorized"))

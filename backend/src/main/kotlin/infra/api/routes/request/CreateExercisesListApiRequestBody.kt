@@ -3,7 +3,7 @@ package infra.api.routes.request
 import domain.exercises.list.request.CreateExercisesListRequest
 import infra.api.routes.response.TagView
 
-class CreateExercisesListApiRequestBody(
+data class CreateExercisesListApiRequestBody(
     val title: String,
     val tags: List<TagView>,
 ) {

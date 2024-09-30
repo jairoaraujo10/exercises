@@ -4,7 +4,7 @@ import {jwtDecode} from "jwt-decode";
 import User from "../../interfaces/User.tsx";
 
 export const Api = axios.create({
-    baseURL: "http://localhost:8080/api"
+    baseURL: "http://localhost/api"
 });
 
 export interface Message {
