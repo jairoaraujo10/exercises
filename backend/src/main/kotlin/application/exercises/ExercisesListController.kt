@@ -45,9 +45,7 @@ class ExercisesListController(
     }
 
     fun searchExercisesList(
-        searchRequest: SearchRequest,
-        pagination: PaginationParams,
-        requester: Requester
+        searchRequest: SearchRequest, pagination: PaginationParams, requester: Requester
     ): PaginatedList<ExercisesList> {
         val filter = exercisesFilterFor(requester)
             .filteredBy(searchRequest.searchTerm)
