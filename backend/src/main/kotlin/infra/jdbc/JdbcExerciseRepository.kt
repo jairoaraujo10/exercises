@@ -1,7 +1,8 @@
 package infra.jdbc
 
 import com.google.gson.Gson
-import domain.exercises.Metadata
+import domain.exercises.IndexMetadataFilter
+import domain.exercises.IndexMetadata
 import domain.exercises.Tag
 import domain.exercises.base.*
 import domain.users.UserId
@@ -84,7 +85,7 @@ class JdbcExerciseRepository(
         }
     }
 
-    override fun searchBy(filter: ExerciseFilter, paginationParams: PaginationParams): PaginatedList<Exercise> {
+    override fun searchBy(filter: IndexMetadataFilter, paginationParams: PaginationParams): PaginatedList<Exercise> {
         val (sql, params) = buildSearchQuery(filter, paginationParams)
         val exercises = jdbcTemplate.query(sql, exerciseRowMapper(), *params.toTypedArray())
         val total = jdbcTemplate.queryForObject(
@@ -95,7 +96,7 @@ class JdbcExerciseRepository(
         return PaginatedList(exercises, total)
     }
 
-    private fun buildSearchQuery(filter: ExerciseFilter, paginationParams: PaginationParams): Pair<String, List<Any>> {
+    private fun buildSearchQuery(filter: IndexMetadataFilter, paginationParams: PaginationParams): Pair<String, List<Any>> {
         val params = mutableListOf<Any>()
         val whereClause = buildSearchWhereClause(filter, params)
         val sql = """
@@ -109,7 +110,7 @@ class JdbcExerciseRepository(
         return Pair(sql, params)
     }
 
-    private fun buildSearchWhereClause(filter: ExerciseFilter, params: MutableList<Any> = mutableListOf()): String {
+    private fun buildSearchWhereClause(filter: IndexMetadataFilter, params: MutableList<Any> = mutableListOf()): String {
         val conditions = mutableListOf<String>()
         conditions.add("""
             CONCAT(
@@ -150,7 +151,7 @@ class JdbcExerciseRepository(
 
     private fun exerciseRowMapper() = { rs: ResultSet, _: Int ->
         val exerciseId = ExerciseId(rs.getString("id"))
-        val metadata = Metadata(
+        val metadata = IndexMetadata(
             title = rs.getString("title"),
             tags = getExerciseTags(exerciseId.value!!),
             authorId = UserId(rs.getLong("author_id")),

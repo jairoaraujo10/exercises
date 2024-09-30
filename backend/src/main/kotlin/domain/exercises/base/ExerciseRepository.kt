@@ -1,5 +1,6 @@
 package domain.exercises.base
 
+import domain.exercises.IndexMetadataFilter
 import domain.exercises.Tag
 import domain.users.UserId
 import domain.utils.PaginatedList
@@ -10,6 +11,6 @@ interface ExerciseRepository {
     fun get(id: ExerciseId): Exercise
     fun update(exercise: Exercise)
     fun delete(exercise: Exercise)
-    fun searchBy(filter: ExerciseFilter, paginationParams: PaginationParams): PaginatedList<Exercise>
+    fun searchBy(filter: IndexMetadataFilter, paginationParams: PaginationParams): PaginatedList<Exercise>
     fun getTags(authorId: UserId): Set<Tag>
 }

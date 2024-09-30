@@ -3,7 +3,7 @@ package integration.infrastructure.jdbc
 import com.google.gson.Gson
 import domain.exercises.Tag
 import domain.exercises.base.Exercise
-import domain.exercises.base.ExerciseFilter
+import domain.exercises.IndexMetadataFilter
 import domain.exercises.base.ExerciseId
 import domain.exercises.base.ExerciseRepository
 import domain.users.UserId
@@ -138,7 +138,7 @@ class JdbcExerciseRepositoryTest {
         insertExerciseIntoDatabase(exercise1)
         insertExerciseIntoDatabase(exercise2)
         insertExerciseIntoDatabase(exercise3)
-        val filter = ExerciseFilter(RequesterFixture.builder().withUserId(UserId(1L)).build())
+        val filter = IndexMetadataFilter(RequesterFixture.builder().withUserId(UserId(1L)).build())
             .filteredBy("Exercise")
             .withTags(setOf(Tag("value_1"), Tag("value_3")))
         val paginationParams = PaginationParams(limit = 2, offset = 0)
@@ -153,7 +153,7 @@ class JdbcExerciseRepositoryTest {
 
     @Test
     fun `searchBy returns empty list when no exercises match filter`() {
-        val filter = ExerciseFilter(anyRequester())
+        val filter = IndexMetadataFilter(anyRequester())
             .filteredBy("Non-matching")
             .withTags(emptySet())
         val paginationParams = PaginationParams(limit = 10, offset = 0)

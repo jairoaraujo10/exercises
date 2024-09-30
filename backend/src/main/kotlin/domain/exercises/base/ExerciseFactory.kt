@@ -1,6 +1,6 @@
 package domain.exercises.base
 
-import domain.exercises.Metadata
+import domain.exercises.IndexMetadata
 import domain.exercises.base.request.CreateExerciseRequest
 import domain.users.UserId
 import domain.utils.TimeProvider
@@ -11,7 +11,7 @@ class ExerciseFactory(
     fun createNew(request: CreateExerciseRequest, authorId: UserId): Exercise {
         return Exercise(
             ExerciseId.notInitiated(),
-            Metadata(
+            IndexMetadata(
                 request.title,
                 request.tags.toMutableSet(),
                 authorId,

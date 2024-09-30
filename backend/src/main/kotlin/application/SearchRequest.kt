@@ -1,8 +1,8 @@
-package domain.exercises.base.request
+package application
 
 import domain.exercises.Tag
 
-data class SearchExercisesRequest(
+data class SearchRequest(
     val searchTerm: String = "",
     val tags: Set<Tag> = emptySet()
 )

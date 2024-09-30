@@ -2,7 +2,7 @@ package utils.domain.exercises
 
 import domain.exercises.Tag
 import domain.exercises.base.request.CreateExerciseRequest
-import domain.exercises.base.request.SearchExercisesRequest
+import application.SearchRequest
 import domain.exercises.base.request.UpdateExerciseRequest
 
 class ExerciseRequestFixture {
@@ -17,7 +17,7 @@ class ExerciseRequestFixture {
 
         fun anyUpdateExerciseRequest(): UpdateExerciseRequest = UpdateExerciseRequest()
 
-        fun anySearchExercisesRequest(): SearchExercisesRequest = SearchExercisesRequest(
+        fun anySearchExercisesRequest(): SearchRequest = SearchRequest(
             "search term", setOf(
                 Tag("Math"),
                 Tag("Algebra")

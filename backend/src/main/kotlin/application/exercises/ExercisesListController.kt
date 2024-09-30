@@ -1,5 +1,7 @@
 package application.exercises
 
+import application.SearchRequest
+import domain.exercises.IndexMetadataFilter.Companion.exercisesFilterFor
 import domain.security.PermissionValidator
 import domain.exercises.list.ExercisesList
 import domain.exercises.list.ExercisesListFactory
@@ -9,6 +11,8 @@ import domain.exercises.list.request.CreateExercisesListRequest
 import domain.exercises.list.request.UpdateExercisesListRequest
 import domain.security.Requester
 import domain.security.Role
+import domain.utils.PaginatedList
+import domain.utils.PaginationParams
 
 class ExercisesListController(
     private val permissionValidator: PermissionValidator,
@@ -38,5 +42,16 @@ class ExercisesListController(
         val exercisesList = repository.get(id)
         permissionValidator.validatePermissionToDelete(requester, exercisesList.accessPolicy)
         repository.delete(exercisesList)
+    }
+
+    fun searchExercisesList(
+        searchRequest: SearchRequest,
+        pagination: PaginationParams,
+        requester: Requester
+    ): PaginatedList<ExercisesList> {
+        val filter = exercisesFilterFor(requester)
+            .filteredBy(searchRequest.searchTerm)
+            .withTags(searchRequest.tags)
+        return repository.searchBy(filter, pagination)
     }
 }

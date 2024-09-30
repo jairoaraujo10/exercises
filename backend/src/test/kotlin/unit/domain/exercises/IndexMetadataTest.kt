@@ -1,13 +1,13 @@
 package unit.domain.exercises
 
-import domain.exercises.Metadata
+import domain.exercises.IndexMetadata
 import domain.exercises.Tag
 import domain.users.UserId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class MetadataTest {
+class IndexMetadataTest {
 
     @Test
     fun `valid metadata should be created successfully`() {
@@ -16,7 +16,7 @@ class MetadataTest {
         val authorId = UserId(123L)
         val creationTimestamp = System.currentTimeMillis()
 
-        val metadata = Metadata(title, tags, authorId, creationTimestamp)
+        val metadata = IndexMetadata(title, tags, authorId, creationTimestamp)
 
         assertEquals(title, metadata.title)
         assertEquals(tags, metadata.tags)
@@ -31,7 +31,7 @@ class MetadataTest {
         val creationTimestamp = System.currentTimeMillis()
 
         val exception = assertThrows<IllegalArgumentException> {
-            Metadata(" ", tags, authorId, creationTimestamp)
+            IndexMetadata(" ", tags, authorId, creationTimestamp)
         }
         assertEquals("Title cannot be blank or whitespace.", exception.message)
     }

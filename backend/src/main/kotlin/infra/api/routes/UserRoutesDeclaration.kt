@@ -3,7 +3,6 @@ package infra.api.routes
 import application.users.UserController
 import com.google.gson.Gson
 import domain.users.UserId
-import domain.utils.PaginationParams
 import infra.api.AbstractRoutesDeclaration
 import infra.api.AuthFilter
 import infra.api.routes.request.CreateUserApiRequestBody
@@ -52,22 +51,4 @@ class UserRoutesDeclaration(
         val userPaginatedList = userController.listUsers("", paginationParamsFrom(request), requester())
         return ok(response, ListUsersResponseView.from(userPaginatedList))
     }
-
-    private fun paginationParamsFrom(request: Request): PaginationParams {
-        return PaginationParams(
-            intQueryParam(request, "limit"),
-            intQueryParam(request, "offset")
-        )
-    }
-
-    private fun intQueryParam(request: Request, key: String): Int? {
-        return try {
-            request.queryParams(key).toInt()
-        } catch (ex: NullPointerException) {
-            null
-        } catch (ex: NumberFormatException) {
-            throw IllegalArgumentException("Invalid query param '${key}'")
-        }
-    }
-
 }

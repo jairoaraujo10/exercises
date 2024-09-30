@@ -1,8 +1,11 @@
 package infra.jdbc
 
+import domain.exercises.IndexMetadataFilter
 import domain.exercises.list.ExercisesList
 import domain.exercises.list.ExercisesListId
 import domain.exercises.list.ExercisesListRepository
+import domain.utils.PaginatedList
+import domain.utils.PaginationParams
 import org.springframework.jdbc.core.JdbcTemplate
 
 class JdbcExercisesListRepository(jdbcTemplate: JdbcTemplate) : ExercisesListRepository {
@@ -19,6 +22,10 @@ class JdbcExercisesListRepository(jdbcTemplate: JdbcTemplate) : ExercisesListRep
     }
 
     override fun delete(exercisesList: ExercisesList) {
+        TODO("Not yet implemented")
+    }
+
+    override fun searchBy(filter: IndexMetadataFilter, pagination: PaginationParams): PaginatedList<ExercisesList> {
         TODO("Not yet implemented")
     }
 }

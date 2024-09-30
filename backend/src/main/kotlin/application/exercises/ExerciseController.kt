@@ -3,11 +3,11 @@ package application.exercises;
 import domain.security.PermissionValidator
 import domain.exercises.base.Exercise
 import domain.exercises.base.ExerciseFactory
-import domain.exercises.base.ExerciseFilter.Companion.exercisesFilterFor
+import domain.exercises.IndexMetadataFilter.Companion.exercisesFilterFor
 import domain.exercises.base.ExerciseId
 import domain.exercises.base.ExerciseRepository
 import domain.exercises.base.request.CreateExerciseRequest
-import domain.exercises.base.request.SearchExercisesRequest
+import application.SearchRequest
 import domain.exercises.base.request.UpdateExerciseRequest
 import domain.security.Requester
 import domain.security.Role
@@ -45,11 +45,11 @@ class ExerciseController(
     }
 
     fun searchExercises(
-        request: SearchExercisesRequest, pagination: PaginationParams, requester: Requester
+        searchRequest: SearchRequest, pagination: PaginationParams, requester: Requester
     ): PaginatedList<Exercise> {
         val filter = exercisesFilterFor(requester)
-            .filteredBy(request.searchTerm)
-            .withTags(request.tags)
+            .filteredBy(searchRequest.searchTerm)
+            .withTags(searchRequest.tags)
         return repository.searchBy(filter, pagination)
     }
 }

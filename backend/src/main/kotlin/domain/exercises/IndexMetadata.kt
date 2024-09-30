@@ -2,7 +2,7 @@ package domain.exercises
 
 import domain.users.UserId
 
-data class Metadata(
+data class IndexMetadata(
     val title: String,
     val tags: Set<Tag>,
     val authorId: UserId,

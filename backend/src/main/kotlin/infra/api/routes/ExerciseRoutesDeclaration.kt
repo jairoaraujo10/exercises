@@ -3,8 +3,7 @@ package infra.api.routes
 import application.exercises.ExerciseController
 import com.google.gson.Gson
 import domain.exercises.base.ExerciseId
-import domain.exercises.base.request.SearchExercisesRequest
-import domain.utils.PaginationParams
+import application.SearchRequest
 import infra.api.AbstractRoutesDeclaration
 import infra.api.AuthFilter
 import spark.Request
@@ -60,28 +59,10 @@ class ExerciseRoutesDeclaration(
     }
 
     private fun search(request: Request, response: Response): String {
-        val searchRequest = extractBody(request, SearchExercisesRequest::class.java)
+        val searchRequest = extractBody(request, SearchRequest::class.java)
         val exercisePaginatedList = exerciseController
             .searchExercises(searchRequest, paginationParamsFrom(request), requester())
         val searchExercisesResponseView = SearchExercisesResponseView.from(exercisePaginatedList)
         return ok(response, searchExercisesResponseView)
     }
-
-    private fun paginationParamsFrom(request: Request): PaginationParams {
-        return PaginationParams(
-            intQueryParam(request, "limit"),
-            intQueryParam(request, "offset")
-        )
-    }
-
-    private fun intQueryParam(request: Request, key: String): Int? {
-        return try {
-            request.queryParams(key).toInt()
-        } catch (ex: NullPointerException) {
-            null
-        } catch (ex: NumberFormatException) {
-            throw IllegalArgumentException("Invalid query param '$key'")
-        }
-    }
-
 }

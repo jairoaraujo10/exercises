@@ -9,7 +9,7 @@ class ExerciseFixture {
         fun anyExercise(): Exercise {
             return Exercise(
                 ExerciseId("123"),
-                Metadata(
+                IndexMetadata(
                     "Exercise title",
                     mutableSetOf(
                         Tag("value_1"),
@@ -32,7 +32,7 @@ class ExerciseFixture {
 
         fun anyWith(id: ExerciseId): Exercise {
             return Exercise(id,
-                Metadata(
+                IndexMetadata(
                     "Exercise title",
                     mutableSetOf(
                         Tag("value_1"),
@@ -55,7 +55,7 @@ class ExerciseFixture {
 
         fun otherWith(id: ExerciseId): Exercise {
             return Exercise(id,
-                Metadata(
+                IndexMetadata(
                     "Other exercise title",
                     mutableSetOf(
                         Tag("value_3"),

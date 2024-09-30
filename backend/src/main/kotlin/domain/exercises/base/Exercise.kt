@@ -1,12 +1,12 @@
 package domain.exercises.base
 
-import domain.exercises.Metadata
+import domain.exercises.IndexMetadata
 import domain.exercises.base.request.UpdateExerciseRequest
 import domain.security.AccessPolicy
 
 data class Exercise(
     val id: ExerciseId,
-    var metadata: Metadata,
+    var metadata: IndexMetadata,
     var content: Content
 ) {
     val accessPolicy: AccessPolicy = AccessPolicy(metadata.authorId)

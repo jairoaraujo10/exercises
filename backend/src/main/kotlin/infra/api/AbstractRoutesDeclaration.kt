@@ -2,6 +2,7 @@ package infra.api
 
 import com.google.gson.Gson
 import domain.security.Requester
+import domain.utils.PaginationParams
 import infra.api.routes.response.SimpleMessageResponse
 import spark.Request
 import spark.Response
@@ -35,5 +36,22 @@ abstract class AbstractRoutesDeclaration(private val gson: Gson, private val aut
         response.status(statusCode)
         response.type("application/json")
         return if (objectBody != null) gson.toJson(objectBody) else ""
+    }
+
+    protected fun paginationParamsFrom(request: Request): PaginationParams {
+        return PaginationParams(
+            intQueryParam(request, "limit"),
+            intQueryParam(request, "offset")
+        )
+    }
+
+    private fun intQueryParam(request: Request, key: String): Int? {
+        return try {
+            request.queryParams(key).toInt()
+        } catch (ex: NullPointerException) {
+            null
+        } catch (ex: NumberFormatException) {
+            throw IllegalArgumentException("Invalid query param '$key'")
+        }
     }
 }

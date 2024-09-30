@@ -1,13 +1,13 @@
 package domain.exercises.list
 
-import domain.exercises.Metadata
+import domain.exercises.IndexMetadata
 import domain.exercises.base.ExerciseId
 import domain.exercises.list.request.UpdateExercisesListRequest
 import domain.security.AccessPolicy
 
 data class ExercisesList(
     val id: ExercisesListId,
-    var metadata: Metadata,
+    var metadata: IndexMetadata,
     val exercises: ArrayList<ExerciseId>
 ) {
     val accessPolicy: AccessPolicy = AccessPolicy(metadata.authorId)
