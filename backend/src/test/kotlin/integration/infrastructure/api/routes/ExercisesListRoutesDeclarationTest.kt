@@ -10,7 +10,9 @@ import infra.api.Gateway
 import infra.api.routes.ErrorsRoutesDeclaration
 import infra.api.routes.ExercisesListRoutesDeclaration
 import infra.api.routes.response.ExercisesListView
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import io.restassured.RestAssured
 import io.restassured.RestAssured.given
@@ -113,6 +115,69 @@ class ExercisesListRoutesDeclarationTest {
         given()
         .`when`().get("/exercises-list/1")
         .then().assertThat()
+            .statusCode(401)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Unauthorized"))
+    }
+
+    @Test
+    fun `updates an exercises list successfully`() {
+        val requestBody = """{"name": "Updated Exercises List", "description": "Updated description"}"""
+        every { exercisesListController.update(ExercisesListId("1"), any(), requester) } just Runs
+
+        given().contentType(ContentType.JSON)
+            .header("Authorization", "Bearer valid-token")
+            .body(requestBody)
+        .`when`().put("/exercises-list/1")
+        .then().assertThat()
+            .statusCode(204)
+    }
+
+    @Test
+    fun `update exercises list request with missing authorization token`() {
+        val requestBody = """{"name": "Updated Exercises List", "description": "Updated description"}"""
+
+        given()
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+        .`when`().put("/exercises-list/1")
+        .then().assertThat()
+            .statusCode(401)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Unauthorized"))
+    }
+
+    @Test
+    fun `deletes an exercises list successfully`() {
+        every { exercisesListController.delete(ExercisesListId("1"), requester) } just Runs
+
+        given()
+            .header("Authorization", "Bearer valid-token")
+            .`when`().delete("/exercises-list/1")
+            .then().assertThat()
+            .statusCode(204)
+    }
+
+    @Test
+    fun `delete exercises list request with non-existing id`() {
+        every {
+            exercisesListController.delete(ExercisesListId("1"), requester)
+        } throws NoSuchElementException("Exercises list not found")
+
+        given()
+            .header("Authorization", "Bearer valid-token")
+            .`when`().delete("/exercises-list/1")
+            .then().assertThat()
+            .statusCode(404)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Exercises list not found"))
+    }
+
+    @Test
+    fun `delete exercises list request with missing authorization token`() {
+        given()
+            .`when`().delete("/exercises-list/1")
+            .then().assertThat()
             .statusCode(401)
             .contentType(ContentType.JSON)
             .body("message", equalTo("Unauthorized"))
