@@ -434,16 +434,13 @@ A API de Gerenciamento de **Listas de Exercícios** permite a criação, recuper
         {
           "id": "string",
           "title": "string",
-          "description": "string",
           "tags": [
             {
               "value": "string"
             }
-          ],
-          "possibleAnswers": ["string"],
-          "correctAnswerIndex": "integer"
+          ]
         }
-        // ... mais exercícios
+        // ... mais metadados de exercícios
       ],
       "total": "integer"
     }
@@ -588,10 +585,9 @@ A API de Gerenciamento de **Listas de Exercícios** permite a criação, recuper
         {
           "id": "string",
           "title": "string",
-          "tags": [{ "value": "string" }],
-          "exerciseIds": ["integer"]
+          "tags": [{ "value": "string" }]
         }
-        // ... mais listas
+        // ... mais metadados de listas
       ],
       "total": "integer"
     }
