@@ -2,6 +2,7 @@ package integration.infrastructure.api.routes
 
 import application.exercises.ExercisesListController
 import com.google.gson.Gson
+import domain.exercises.base.ExerciseId
 import domain.exercises.list.ExercisesListId
 import domain.users.auth.Token
 import domain.users.auth.TokenService
@@ -183,6 +184,125 @@ class ExercisesListRoutesDeclarationTest {
             .statusCode(401)
             .contentType(ContentType.JSON)
             .body("message", equalTo("Unauthorized"))
+    }
+
+    @Test
+    fun `adds an exercise to the list successfully`() {
+        val requestBody = """{"exerciseId": 1}"""
+        every {
+            exercisesListController.addExerciseToList(ExercisesListId("1"), ExerciseId("1"), requester)
+        } just Runs
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", "Bearer valid-token")
+        .body(requestBody)
+        .`when`().post("/exercises-list/1/exercises")
+            .then().assertThat()
+            .statusCode(204)
+    }
+
+    @Test
+    fun `add exercise to list with missing authorization token`() {
+        val requestBody = """{"exerciseId": 1}"""
+
+        given()
+            .contentType(ContentType.JSON)
+            .body(requestBody)
+        .`when`().post("/exercises-list/1/exercises")
+        .then().assertThat()
+            .statusCode(401)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Unauthorized"))
+    }
+
+    @Test
+    fun `add exercise to non-existing list`() {
+        val requestBody = """{"exerciseId": 1}"""
+        every {
+            exercisesListController.addExerciseToList(ExercisesListId("1"), ExerciseId("1"), requester)
+        } throws NoSuchElementException("Exercises list not found")
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", "Bearer valid-token")
+            .body(requestBody)
+        .`when`().post("/exercises-list/1/exercises")
+        .then().assertThat()
+            .statusCode(404)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Exercises list not found"))
+    }
+
+    @Test
+    fun `add non-existing exercise to the list`() {
+        val requestBody = """{"exerciseId": 9}"""
+        every {
+            exercisesListController.addExerciseToList(ExercisesListId("1"), ExerciseId("9"), requester)
+        } throws NoSuchElementException("Exercise not found")
+
+        given()
+            .contentType(ContentType.JSON)
+            .header("Authorization", "Bearer valid-token")
+            .body(requestBody)
+        .`when`().post("/exercises-list/1/exercises")
+        .then().assertThat()
+            .statusCode(404)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Exercise not found"))
+    }
+
+    @Test
+    fun `removes an exercise from the list successfully`() {
+        every {
+            exercisesListController.removeExerciseFromList(ExercisesListId("1"), ExerciseId("1"), requester)
+        } just Runs
+
+        given()
+            .header("Authorization", "Bearer valid-token")
+        .`when`().delete("/exercises-list/1/exercises/1")
+        .then().assertThat()
+            .statusCode(204)
+    }
+
+    @Test
+    fun `remove exercise from list with missing authorization token`() {
+        given()
+        .`when`().delete("/exercises-list/1/exercises/1")
+        .then().assertThat()
+            .statusCode(401)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Unauthorized"))
+    }
+
+    @Test
+    fun `remove exercise from non-existing list`() {
+        every {
+            exercisesListController.removeExerciseFromList(ExercisesListId("1"), ExerciseId("1"), requester)
+        } throws NoSuchElementException("Exercises list not found")
+
+        given()
+            .header("Authorization", "Bearer valid-token")
+        .`when`().delete("/exercises-list/1/exercises/1")
+        .then().assertThat()
+            .statusCode(404)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Exercises list not found"))
+    }
+
+    @Test
+    fun `remove non-existing exercise from the list`() {
+        every {
+            exercisesListController.removeExerciseFromList(ExercisesListId("1"), ExerciseId("9"), requester)
+        } throws NoSuchElementException("Exercise not found")
+
+        given()
+            .header("Authorization", "Bearer valid-token")
+        .`when`().delete("/exercises-list/1/exercises/9")
+        .then().assertThat()
+            .statusCode(404)
+            .contentType(ContentType.JSON)
+            .body("message", equalTo("Exercise not found"))
     }
 
     @Test

@@ -2,6 +2,7 @@ package application.exercises
 
 import application.SearchRequest
 import domain.exercises.IndexMetadataFilter.Companion.exercisesFilterFor
+import domain.exercises.base.ExerciseId
 import domain.security.PermissionValidator
 import domain.exercises.list.ExercisesList
 import domain.exercises.list.ExercisesListFactory
@@ -42,6 +43,20 @@ class ExercisesListController(
         val exercisesList = repository.get(id)
         permissionValidator.validatePermissionToDelete(requester, exercisesList.accessPolicy)
         repository.delete(exercisesList)
+    }
+
+    fun addExerciseToList(id: ExercisesListId, exerciseId: ExerciseId, requester: Requester) {
+        val exercisesList = repository.get(id)
+        permissionValidator.validatePermissionToUpdate(requester, exercisesList.accessPolicy)
+        exercisesList.addExercise(exerciseId)
+        repository.update(exercisesList)
+    }
+
+    fun removeExerciseFromList(id: ExercisesListId, exerciseId: ExerciseId, requester: Requester) {
+        val exercisesList = repository.get(id)
+        permissionValidator.validatePermissionToUpdate(requester, exercisesList.accessPolicy)
+        exercisesList.removeExercise(exerciseId)
+        repository.update(exercisesList)
     }
 
     fun searchExercisesList(

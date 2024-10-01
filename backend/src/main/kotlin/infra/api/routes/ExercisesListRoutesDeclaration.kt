@@ -3,9 +3,11 @@ package infra.api.routes
 import application.exercises.ExercisesListController
 import com.google.gson.Gson
 import application.SearchRequest
+import domain.exercises.base.ExerciseId
 import domain.exercises.list.ExercisesListId
 import infra.api.AbstractRoutesDeclaration
 import infra.api.AuthFilter
+import infra.api.routes.request.AddExerciseRequest
 import infra.api.routes.request.CreateExercisesListApiRequestBody
 import infra.api.routes.request.UpdateExercisesListApiRequestBody
 import infra.api.routes.response.ExercisesListView
@@ -30,6 +32,8 @@ class ExercisesListRoutesDeclaration(
         service.put("$BASE_ENDPOINT/:id", this::updateExercisesList)
         service.delete("$BASE_ENDPOINT/:id", this::deleteExercisesList)
         service.post("$BASE_ENDPOINT/search", this::searchExercisesList)
+        service.post("$BASE_ENDPOINT/:id/exercises", this::addExerciseToList)
+        service.delete("$BASE_ENDPOINT/:id/exercises/:exerciseId", this::removeExerciseFromList)
     }
 
     private fun createExercisesList(request: Request, response: Response): String {
@@ -55,6 +59,20 @@ class ExercisesListRoutesDeclaration(
     private fun deleteExercisesList(request: Request, response: Response): String {
         val exercisesListId = ExercisesListId(request.params("id"))
         exercisesListController.delete(exercisesListId, requester())
+        return noContent(response)
+    }
+
+    private fun addExerciseToList(request: Request, response: Response): String {
+        val exercisesListId = ExercisesListId(request.params("id"))
+        val addExerciseRequest = extractBody(request, AddExerciseRequest::class.java)
+        exercisesListController.addExerciseToList(exercisesListId, addExerciseRequest.asExerciseId(), requester())
+        return noContent(response)
+    }
+
+    private fun removeExerciseFromList(request: Request, response: Response): String {
+        val exercisesListId = ExercisesListId(request.params("id"))
+        val exerciseId = ExerciseId(request.params("exerciseId"))
+        exercisesListController.removeExerciseFromList(exercisesListId, exerciseId, requester())
         return noContent(response)
     }
 
