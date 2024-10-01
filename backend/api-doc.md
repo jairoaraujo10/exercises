@@ -1,4 +1,4 @@
-# Documentação das APIs
+# Documentação da API
 
 Este documento fornece informações detalhadas sobre os endpoints da API de Autenticação, Gerenciamento de Usuários, Gerenciamento de Exercícios e Gerenciamento de **Listas de Exercícios**, incluindo suas funcionalidades, estruturas de requisição e resposta, e possíveis códigos de status.
 
