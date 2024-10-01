@@ -31,9 +31,9 @@ class ExercisesListRoutesDeclaration(
         service.get("$BASE_ENDPOINT/:id", this::getExercisesList)
         service.put("$BASE_ENDPOINT/:id", this::updateExercisesList)
         service.delete("$BASE_ENDPOINT/:id", this::deleteExercisesList)
-        service.post("$BASE_ENDPOINT/search", this::searchExercisesList)
         service.post("$BASE_ENDPOINT/:id/exercises", this::addExerciseToList)
         service.delete("$BASE_ENDPOINT/:id/exercises/:exerciseId", this::removeExerciseFromList)
+        service.post("$BASE_ENDPOINT/search", this::searchExercisesList)
     }
 
     private fun createExercisesList(request: Request, response: Response): String {

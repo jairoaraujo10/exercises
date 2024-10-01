@@ -7,7 +7,7 @@ data class SearchExercisesResponseView(val exercises: List<IndexMetadataView>, v
     companion object {
         fun from(exercisePaginated: PaginatedList<Exercise>): Any {
             return SearchExercisesResponseView(exercisePaginated.items.map { exercise ->
-                IndexMetadataView.from(exercise.id, exercise.metadata)
+                IndexMetadataView.from(exercise.id.value!!, exercise.metadata)
             }, exercisePaginated.total)
         }
     }

@@ -5,9 +5,9 @@ import domain.utils.PaginatedList
 
 class SearchExercisesListResponseView {
     companion object {
-        fun from(exercisesListPaginated: PaginatedList<ExercisesList>): Any {
+        fun from(exercisesListPaginated: PaginatedList<ExercisesList>): SearchExercisesResponseView {
             return SearchExercisesResponseView(exercisesListPaginated.items.map { exercise ->
-                IndexMetadataView.from(exercise.id, exercise.metadata)
+                IndexMetadataView.from(exercise.id.value!!, exercise.metadata)
             }, exercisesListPaginated.total)
         }
     }
