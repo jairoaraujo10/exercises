@@ -1,4 +1,6 @@
-# Exercises
+# Documentação de Desenvolvimento
+
+Este documento fornece instruções e informações para desenvolvedores que desejam contribuir ou executar este projeto localmente.
 
 ## Índice
 
